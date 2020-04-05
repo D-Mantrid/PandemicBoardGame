@@ -1,71 +1,59 @@
 # coding: utf-8
+from configparser import ConfigParser
+
 
 class City:
-    cubeColours = []
+    cube_colours = []
 
     def __init__(self, name, colour):
         self.name = name
-        self.hasLab = False
+        self.has_lab = False
         self.colour = colour
         self.cubes = {}
-        self.setCityColours(City.cubeColours)
+        self.init_city_colours(__class__.cube_colours)
         self.distance = 999
-        self.connectedCities = []
+        self.connected_cities = []
 
-    def getColour(self):
-        return self.colour
-
-    def getCountConnections(self):
-        return self.connectedCities.__len__()
-
-    def getConnectedCity(self, connection):
-        return self.connectedCities[connection - 1]
-
-    def setCityColours(self, cubeColours):
-        for colour in cubeColours:
+    def init_city_colours(self, cube_colours):
+        for colour in cube_colours:
             self.cubes[colour] = 0
 
-    def removeCube(self, colour):
-        self.cubes[colour] = self.cubes[colour] - 1
+    # TODO: rewrite or remove this method
+    def get_connected_city(self, connection):
+        return self.connected_cities[connection - 1]
 
-    def addCube(self, colour):
-        self.cubes[colour] = self.cubes[colour] + 1
+    def remove_cube(self, colour):
+        # TODO: check for positive values (and where we actually must do this)
+        self.cubes[colour] -= 1
 
-    def getLab(self):
-        return self.hasLab
+    def add_cube(self, colour):
+        self.cubes[colour] += 1
 
-    def buildLab(self):
-        if not self.hasLab:
-            self.hasLab = True
-            return True
-        else:
+    def build_lab(self):
+        if self.has_lab:
             return False
+        self.has_lab = True
+        return True
 
-    def addConnection(self, newConnection):
-        self.connectedCities.append(newConnection)
+    def add_connection(self, new_city):
+        self.connected_cities.append(new_city)
 
-    def getConnections(self):
-        return self.connectedCities
+    # TODO: remove this method after checking all places that use it
+    def get_connections(self):
+        return self.connected_cities
 
-    def getName(self):
-        return self.name
-
-    def removeAllCubes(self, colour):
+    def remove_all_cubes(self, colour):
         self.cubes[colour] = 0
 
-    def getMaxCubes(self):
-        toReturn = 0
-        for cubeCount in self.cubes.values():
-            if cubeCount > toReturn:
-                toReturn = cubeCount
-        return toReturn
+    def get_max_cubes(self):
+        return max(self.cubes.values())
 
-    def getCubes(self, colour):
+    def get_cubes(self, colour):
         return self.cubes[colour]
 
     @classmethod
-    def setCubeColours(cls, settingsLocation):
+    def set_cube_colours(cls, settings_location):
         parser = ConfigParser()
-        parser.read(settingsLocation)
-        cls.cubeColours = parser.get('Colours', 'colours').split(',')
+        parser.read(settings_location)
+        cls.cube_colours = parser.get('Colours', 'colours').split(',')
 

@@ -1,4 +1,8 @@
 # coding: utf-8
+import random
+from itertools import cycle, chain
+
+from card import Card
 
 
 class Deck:
@@ -6,49 +10,44 @@ class Deck:
         self.cards = []
         self.discard = []
 
-    def takeTopCard(self):
+    def take_top_card(self):
         return self.cards.pop(0)
 
-    def takeBottomCard(self):
-        self.cards.reverse()
-        toReturn = self.cards.pop(0)
-        self.cards.reverse()
-        return toReturn
+    def take_bottom_card(self):
+        return self.cards.pop()
 
-    def addCard(self, newCard):
-        self.cards.append(newCard)
+    def add_card(self, new_card):
+        self.cards.append(new_card)
 
-    def addDiscard(self, discardedCard):
-        self.discard.append(discardedCard)
+    def add_discard(self, discarded_card):
+        self.discard.append(discarded_card)
 
-    def getDiscardCount(self):
-        return self.discard.__len__()
+    def get_discard_count(self):
+        return len(self.discard)
 
-    def shuffleDiscardToTop(self):
+    # TODO: make DiseaseDeck subclass and place this method there
+    def shuffle_discard_to_top(self):
         random.shuffle(self.discard)
-        self.cards.reverse()
-        for card in self.discard:
-            toUse = self.discard.pop(0)
-            self.cards.append(toUse)
-        self.cards.reverse()
+        self.cards = self.discard + self.cards
+        self.discard = []
 
     def shuffle(self):
         random.shuffle(self.cards)
 
-    def addEpidemics(self, numberEpidemics):
-        cardPiles = {}
-        for x in range (0, numberEpidemics):
-            cardPiles[x] = []
+    # TODO: make PlayerDeck subclass and place this method there
+    def add_epidemics(self, number_epidemics):
+        card_piles = [[] for i in range(number_epidemics)]
         random.shuffle(self.cards)
-        while self.cards.__len__()>0:
-            for x in range(0, numberEpidemics):
-                cardToAdd = self.cards.pop()
-                cardPiles.get(x).append(cardToAdd)
-        for x in range(0, numberEpidemics):
-            cardPiles.get(x).append(Card("Epidemic", "All"))
-            random.shuffle(cardPiles.get(x))
-        for x in range(0, numberEpidemics):
-            while cardPiles.get(x).__len__() > 0:
-                cardToAdd = cardPiles.get(x).pop()
-                self.cards.append(cardToAdd)
+
+        for pile in cycle(card_piles):
+            pile.append(self.cards.pop())
+            if not self.cards:
+                break
+
+        for pile in card_piles:
+            epidemic_card = Card("Epidemic", "All")
+            place_to_insert = random.randint(0, len(pile))
+            pile.insert(place_to_insert, epidemic_card)
+
+        self.cards = list(chain(*card_piles))
 
