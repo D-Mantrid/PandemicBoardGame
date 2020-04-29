@@ -1,0 +1,181 @@
+:root {
+    --white-color: white;
+    --color_t1: #008806;
+    --color_t2: #0b74ff;
+    --red-color: #009e1d;
+    /*--red-color:  #FF2300;*/
+    --super-red-color: #76ff00;
+    --red-color2: #7c1800;
+    --blue-text-color: #0053ff;
+    --green-color: #008806;
+    --black-color: #2B2B2B;
+    --bright-color: #00f9ff;
+    --dark-menu: #141414;
+}
+
+body {
+    background: var(--black-color);
+}
+
+h1 {
+    color: var(--super-red-color);
+    /*font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;*/
+    font-family: 'Comic Sans MS', sans-serif;
+}
+
+h3 {
+    color: var(--red-color);
+}
+
+.card_img{
+    width: 140px;
+}
+.card_img:hover{
+    width: 8%;
+}
+
+#score_right{
+    display: inline;
+    right: 20%;
+    position: absolute;
+    top: 5%;
+}
+
+/*#left_menu{*/
+/*    display: inline;*/
+/*    position: absolute;*/
+/*    !*top: 15%;*!*/
+/*    background: var(--dark-menu);*/
+/*    padding: 5px;*/
+/*}*/
+
+
+.bottom{
+    background: var(--dark-menu);
+    height: 100%;
+}
+
+ul {
+    list-style: none;
+}
+
+#rope{
+    width: 100%;
+    height: 10px;
+    background-image: url('rope.png');
+    background-repeat: repeat-x;
+}
+
+.player_span{
+    color: var(--red-color);
+    font-size: 20px;
+}
+
+.selected_player{
+    color:  var(--white-color);
+    font-size: 20px;
+    text-decoration: underline;
+    background-color: var(--red-color2);
+}
+
+#mapid {
+    width: 70%;
+    height: 500px;
+    /*position: fixed;*/
+    /*right: 5%;*/
+    left: 205px;
+}
+
+
+.tab-button {
+        padding: 6px 10px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        background: #f0f0f0;
+        margin-bottom: -1px;
+        margin-right: -1px;
+        width: 120px;
+}
+
+.tab-button:hover {
+    background: #e0e0e0;
+}
+
+.tab-button.active {
+    background: #e05300;
+}
+
+.tab {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+#start_btn{
+    border-radius: 10px;
+    height: 40px;
+    width: 140px;
+    background: linear-gradient(180deg, #1aad00, #0c4c05);
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+#home_div{
+    position: fixed;
+    height: 500px;
+    color: white;
+}
+
+
+.left_side{
+    /*display: inline;*/
+    position: fixed;
+    left: 20px;
+    background: var(--dark-menu);
+    padding: 15px;
+    width: 30%;
+}
+
+
+
+
+.left_side_small{
+    /*display: inline;*/
+    position: fixed;
+    left: 20px;
+    background: var(--dark-menu);
+    padding: 15px;
+    width: 200px;
+}
+
+#first_menu{
+    /*display: inline;*/
+    position: fixed;
+    right: 20px;
+    padding: 15px;
+    width: 100%;
+    z-index: -1;
+}
+
+.blue{
+    color: #00a5ff;
+}
+
+
+.red{
+    color: #ff4000;
+}
+
+
+.input_name{
+    width: 80px;
+}
+
+.left_select{
+    background: rgba(13, 14, 42, 0.97);
+    color: #282828;
+    border: none;
+    width: 100%;
+}
