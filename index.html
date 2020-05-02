@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pandemic Online</title>
+    <link rel="stylesheet" href="pandemic_style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-ant-path" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div class="header">
+    <h1>Pandemic Online</h1>
+</div>
+
+
+<div id="dynamic-component-demo">
+      <div id="virus_level">
+          virus level
+          <input type="radio" id="one" value="1" v-model="virus_level">
+          <label for="one">1</label>
+
+          <input type="radio" id="two" value="2" v-model="virus_level">
+          <label for="two">2</label>
+
+          <input type="radio" id="three" value="3" v-model="virus_level">
+          <label for="three">3</label>
+
+          <input type="radio" id="four" value="4" v-model="virus_level">
+          <label for="two">4</label>
+
+            <input type="radio" id="five" value="5" v-model="virus_level">
+            <label for="five">5</label>
+
+            <input type="radio" id="six" value="6" v-model="virus_level">
+            <label for="six">6</label>
+          <div hidden="true">{{ virus_level }}</div>
+      </div>
+      <button
+        v-for="tab in tabs"
+        v-bind:key="tab"
+        v-bind:class="['tab-button', { active: currentTab === tab }]"
+        v-on:click="currentTab = tab"
+      >
+        {{ tab }}
+      </button>
+      <component v-bind:is="currentTabComponent" class="tab"></component>
+</div>
+
+<script src="game_cities.js">
+</script>
+<script src="game_view.js">
+</script>
+</body>
+</html>
