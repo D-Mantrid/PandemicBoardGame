@@ -27,14 +27,19 @@ h3 {
     color: var(--red-color);
 }
 
-.card_img{
+.card_img_static {
     width: 140px;
 }
-.card_img:hover{
+
+.card_img {
+    width: 140px;
+}
+
+.card_img:hover {
     width: 8%;
 }
 
-#score_right{
+#score_right {
     display: inline;
     right: 20%;
     position: absolute;
@@ -50,7 +55,7 @@ h3 {
 /*}*/
 
 
-.bottom{
+.bottom {
     background: var(--dark-menu);
     height: 100%;
 }
@@ -59,27 +64,27 @@ ul {
     list-style: none;
 }
 
-#rope{
+#rope {
     width: 100%;
     height: 10px;
     background-image: url('rope.png');
     background-repeat: repeat-x;
 }
 
-.player_span{
+.player_span {
     color: var(--red-color);
     font-size: 20px;
 }
 
-.selected_player{
-    color:  var(--white-color);
+.selected_player {
+    color: var(--white-color);
     font-size: 20px;
     text-decoration: underline;
     background-color: var(--red-color2);
 }
 
 #mapid {
-    width: 70%;
+    width: 1000px;
     height: 500px;
     /*position: fixed;*/
     /*right: 5%;*/
@@ -88,15 +93,15 @@ ul {
 
 
 .tab-button {
-        padding: 6px 10px;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        border: 1px solid #ccc;
-        cursor: pointer;
-        background: #f0f0f0;
-        margin-bottom: -1px;
-        margin-right: -1px;
-        width: 120px;
+    padding: 6px 10px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background: #f0f0f0;
+    margin-bottom: -1px;
+    margin-right: -1px;
+    width: 120px;
 }
 
 .tab-button:hover {
@@ -112,7 +117,7 @@ ul {
     padding: 10px;
 }
 
-#start_btn{
+#start_btn {
     border-radius: 10px;
     height: 40px;
     width: 140px;
@@ -122,14 +127,14 @@ ul {
     cursor: pointer;
 }
 
-#home_div{
+#home_div {
     position: fixed;
     height: 500px;
     color: white;
 }
 
 
-.left_side{
+.left_side {
     /*display: inline;*/
     position: fixed;
     left: 20px;
@@ -139,18 +144,16 @@ ul {
 }
 
 
-
-
-.left_side_small{
+.left_side_small {
     /*display: inline;*/
-    position: fixed;
+    position: absolute;
     left: 20px;
     background: var(--dark-menu);
     padding: 15px;
     width: 200px;
 }
 
-#first_menu{
+#first_menu {
     /*display: inline;*/
     position: fixed;
     right: 20px;
@@ -159,23 +162,73 @@ ul {
     z-index: -1;
 }
 
-.blue{
+.blue {
     color: #00a5ff;
 }
 
 
-.red{
+.red {
     color: #ff4000;
 }
 
 
-.input_name{
+.input_name {
     width: 80px;
 }
 
-.left_select{
+.left_select {
     background: rgba(13, 14, 42, 0.97);
     color: #282828;
     border: none;
     width: 100%;
+}
+
+
+#virus_level {
+    position: absolute;
+    display: block;
+    right: 40px;
+    top: 20px;
+    width: 400px;
+    height: 40px;
+    font-size: 24px;
+    color: #00ff39;
+}
+
+label {
+    position: relative;
+    cursor: pointer;
+}
+
+textarea {
+    width: 300px;
+    height: 400px;
+    color: blue;
+    background: white;
+    font-size: 26px;
+}
+
+#player_cards, #game_cards, #old_cards {
+    /*display: inline;*/
+    /*position: relative;*/
+    /*width: 200px;*/
+    /*height: 300px;*/
+    color: white;
+}
+
+.color_red {
+    color: red;
+}
+
+.color_blue {
+    color: blue;
+}
+
+.color_black {
+    color: black;
+    background: white;
+}
+
+.color_yellow {
+    color: yellow;
 }

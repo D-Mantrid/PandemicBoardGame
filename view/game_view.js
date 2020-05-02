@@ -1,23 +1,23 @@
 function createTable(tableData, parentDiv) {
-        parentDiv.innerHTML = "";
-        var table = document.createElement('table');
-        var tableBody = document.createElement('tbody');
+    parentDiv.innerHTML = "";
+    var table = document.createElement('table');
+    var tableBody = document.createElement('tbody');
 
-        tableData.forEach(function (rowData) {
-            var row = document.createElement('tr');
-            rowData.forEach(function (cellData) {
-                var cell = document.createElement('td');
-                cell.appendChild(document.createTextNode(cellData));
-                row.appendChild(cell);
-            });
-            tableBody.appendChild(row);
+    tableData.forEach(function (rowData) {
+        var row = document.createElement('tr');
+        rowData.forEach(function (cellData) {
+            var cell = document.createElement('td');
+            cell.appendChild(document.createTextNode(cellData));
+            row.appendChild(cell);
         });
+        tableBody.appendChild(row);
+    });
 
-        table.appendChild(tableBody);
-        parentDiv.appendChild(table);
-    }
+    table.appendChild(tableBody);
+    parentDiv.appendChild(table);
+}
 
-function getIconHouse(title, lat, lon){
+function getIconHouse(title, lat, lon) {
 
     let svg = `<svg  width="43.3" height="42.4" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
 <metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
@@ -26,29 +26,28 @@ function getIconHouse(title, lat, lon){
 
     let meIcon = L.divIcon({
         className: "leaflet-data-marker",
-            html: svg.replace('#','%23'),
-            iconAnchor  : [22, 28],
-            iconSize    : [20, 32],
-            popupAnchor : [0, -30],
-        });
+        html: svg.replace('#', '%23'),
+        iconAnchor: [22, 28],
+        iconSize: [20, 32],
+        popupAnchor: [0, -30],
+    });
     return L.marker([lat, lon], {
         icon: meIcon,
         title: title,
         draggable: true
     });
-
 }
 
-function getIcon(title, color1, color2, color3, lat, lon){
+function getIcon(title, color1, color2, color3, lat, lon) {
     let svg = `<svg id="mePin" xmlns="http://www.w3.org/2000/svg" width="43.3" height="42.4" viewBox="0 0 43.3 42.4"><path class="ring_outer" fill="${color1}" d="M28.6 23c6.1 1.4 10.4 4.4 10.4 8 0 4.7-7.7 8.6-17.3 8.6-9.6 0-17.4-3.9-17.4-8.6 0-3.5 4.2-6.5 10.3-7.9.7-.1-.4-1.5-1.3-1.3C5.5 23.4 0 27.2 0 31.7c0 6 9.7 10.7 21.7 10.7s21.6-4.8 21.6-10.7c0-4.6-5.7-8.4-13.7-10-.8-.2-1.8 1.2-1 1.4z"/><path class="ring_inner" fill="${color2}" d="M27 25.8c2 .7 3.3 1.8 3.3 3 0 2.2-3.7 3.9-8.3 3.9-4.6 0-8.3-1.7-8.3-3.8 0-1 .8-1.9 2.2-2.6.6-.3-.3-2-1-1.6-2.8 1-4.6 2.7-4.6 4.6 0 3.2 5.1 5.7 11.4 5.7 6.2 0 11.3-2.5 11.3-5.7 0-2-2.1-3.9-5.4-5-.7-.1-1.2 1.3-.7 1.5z"/><path class="mePin" d="M21.6 8.1a4 4 0 0 0 4-4 4 4 0 0 0-4-4.1 4.1 4.1 0 0 0-4.1 4 4 4 0 0 0 4 4.1zm4.9 8v-3.7c0-1.2-.6-2.2-1.7-2.6-1-.4-1.9-.6-2.8-.6h-.9c-1 0-2 .2-2.8.6-1.2.4-1.8 1.4-1.8 2.6V16c0 .9 0 2 .2 2.8.2.8.8 1.5 1 2.3l.2.3.4 1 .1.8.2.7.6 3.6c-.6.3-.9.7-.9 1.2 0 .9 1.4 1.7 3.2 1.7 1.8 0 3.2-.8 3.2-1.7 0-.5-.3-.9-.8-1.2l.6-3.6.1-.7.2-.8.3-1 .1-.3c.3-.8 1-1.5 1.1-2.3.2-.8.2-2 .2-2.8z" fill="${color3}"/></svg>`;
 
     let meIcon = L.divIcon({
         className: "leaflet-data-marker",
-            html: svg.replace('#','%23'),
-            iconAnchor  : [22, 28],
-            iconSize    : [20, 32],
-            popupAnchor : [0, -30],
-        });
+        html: svg.replace('#', '%23'),
+        iconAnchor: [22, 28],
+        iconSize: [20, 32],
+        popupAnchor: [0, -30],
+    });
     return L.marker([lat, lon], {
         icon: meIcon,
         title: title,
@@ -80,14 +79,57 @@ function plotMap() {
 
     Stadia_AlidadeSmoothDark.addTo(mymap);
 
-    function onCircleClick(e) {
+    function onCircleOver(e) {
         let coord = e.latlng.toString().replace('LatLng', '');
         // let text = `${this.city_name}  ${this.population} ${coord}`;
-        let text = `${this.city_name}`;
+        let text = `${this.city_name} ${this.virus_level}`;
         popup
             .setLatLng(e.latlng)
             .setContent(text)
             .openOn(mymap);
+    }
+
+
+    function onCircleClick(e) {
+        // let coord = e.latlng.toString().replace('LatLng', '');
+        // let text = `${this.city_name}  ${this.population} ${coord}`;
+        // let text = `${this.city_name}`;
+        if (e.target.virus_level < 3) {
+
+            let circle = L.circle([e.target.lat, e.target.lon], {
+                color: e.target.options.color,
+                fillColor: e.target.options.color,
+                fillOpacity: 0.8,
+                radius: e.target.options.radius * 1.5
+            });
+
+            circle.city_name = e.target.city_name;
+            circle.population = e.target.population;
+            circle.virus_level = e.target.virus_level + 1;
+            circle.lat = e.target.lat;
+            circle.lon = e.target.lon;
+
+            circle.on('click', onCircleClick)
+                .on('mouseover', onCircleOver)
+                .addTo(mymap);
+            e.target.remove(mymap);
+        } else {
+                let circle = L.circle([e.target.lat, e.target.lon], {
+                    color: e.target.options.color,
+                    fillColor: e.target.options.color,
+                    fillOpacity: 0.8,
+                    radius: 100000
+                });
+                circle.city_name = e.target.city_name;
+                circle.population = e.target.population;
+                circle.virus_level = 1;
+                circle.lat = e.target.lat;
+                circle.lon = e.target.lon;
+                circle.on('click', onCircleClick)
+                .on('mouseover', onCircleOver)
+                .addTo(mymap);
+                e.target.remove(mymap);
+        }
     }
 
 
@@ -145,12 +187,16 @@ function plotMap() {
             fillOpacity: 0.8,
             radius: r
         }).addTo(mymap);
+
         circle.city_name = names[i];
         circle.population = population[i];
-        circle.on('mouseover', onCircleClick);
-
+        circle.virus_level = 0;
+        circle.lat  = lat;
+        circle.lon = lon;
+        circle.on('mouseover', onCircleOver);
+        circle.on('click', onCircleClick);
     }
-    
+
     let color1 = '#878787';
     let color2 = '#5F5F5F';
     let color3 = '#ff5000';
@@ -160,13 +206,18 @@ function plotMap() {
     let color6 = '#ffe500';
 
     let lat = 32.185531;
-    let lon = - 83.542718;
+    let lon = -83.542718;
     let dx = 1;
 
-    let laboratory = getIconHouse('laboratory', lat+2*dx, lon);
-    laboratory.addTo(mymap);
+    // let laboratory = getIconHouse('laboratory', lat + 2 * dx, lon);
+    // laboratory.addTo(mymap);
 
-    let doctor_marker = getIcon('Doctor', color1, color2, color3, lat, lon+dx);
+    for (var i = 0; i < 48; i++){
+        let laboratory = getIconHouse('laboratory', lat + 2 * dx, lon);
+        laboratory.addTo(mymap);
+    }
+
+    let doctor_marker = getIcon('Doctor', color1, color2, color3, lat, lon + dx);
     doctor_marker.addTo(mymap);
 
     let scientist_marker = getIcon('Scientist', color1, color2, color4, lat + dx, lon + dx);
@@ -177,7 +228,6 @@ function plotMap() {
 
     let caranteener_marker = getIcon('Caranteener', color1, color2, color6, lat + dx, lon);
     caranteener_marker.addTo(mymap);
-
 
 
 }
@@ -201,7 +251,7 @@ Vue.component("tab-home", {
         <h3><span class="blue">Caranteener</span> {{ player4_name }}:&nbsp
         <input class="input_name" v-model="player4_name"/></h3>
         
-        <h3><span class="red">Complexity&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span> {{ complexity }}:&nbsp
+        <h3><span class="red">Complexity&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span> {{ complexity }}:&nbsp</h3>
         <select v-model="complexity">
               <option disabled value="">Options</option>
               <option>1</option>
@@ -227,7 +277,8 @@ Vue.component("tab-home", {
     <button id="start_btn" onclick="start_game()">start</button>
     </div>
      </center>
-    
+
+</div>
     `,
     data: function () {
         return {
@@ -240,11 +291,42 @@ Vue.component("tab-home", {
     }
 });
 
-Vue.component("tab-game", {
+
+var init_players_cards = {
+            Doctor: 'Атланта\nМадрид',
+            Scientist: 'Пекин\nМосква',
+            Researcher: 'Лондон\nКарачи',
+            Caranteener: 'Милан\nТоронто',
+};
+
+var init_players_cards_color = convert2color(init_players_cards);
+
+
+function text2color(text){
+    let words = text.split('\n');
+    let data_color = {};
+
+    for (let i = 0; i < words.length; i++) {
+        let word = words[i];
+       let c = colors_rus[word];
+       data_color[word] = `color_${c}`;
+    }
+    return data_color;
+}
+
+function convert2color(data){
+   let data_color = {};
+   for (const [key, value] of Object.entries(data)) {
+       data_color[key] = text2color(value);
+   }
+   return data_color;
+}
+
+let tab_game = Vue.component("tab-game", {
     template: `<div>
 <div id="left_menu" class="left_side_small">
     <h3>Players</h3>
-     <img class='card_img' v-bind:src="'img/' + current_player +'.jpg'"/>
+     <img class='card_img_static' v-bind:src="'img/' + current_player +'.jpg'"/>
      <br>
     <select v-model="current_player" size="4" class="left_select">
         <option><span class="player_span">Doctor</span></option>
@@ -260,52 +342,86 @@ Vue.component("tab-game", {
 </div>
 
 <div class="bottom">
-    <center>
         <div id="rope"></div>
-        <h3><span class="selected_player">{{ current_player }}</span> cards</h3>
-       
-        <img class='card_img' src="images/trash/cities_cards.png"/>
-        &nbsp &nbsp
-        <img class='card_img' src="images/trash/cities_blue.png"/>
-        &nbsp &nbsp
-        <img class='card_img' src="images/trash/cities_yellow.png"/>
-        &nbsp &nbsp
-        <img class='card_img' src="images/trash/cities_red.png"/>
-        &nbsp &nbsp
-        <img class='card_img' src="images/trash/cities_black.png"/>
+        <h3><span class="selected_player">{{ current_player }}</span> cards 
+        <span v-for="(color_class, city) in players_cards_color[current_player]" v-bind:class=color_class>
+<!--         v-bind:class={ color_class }-->
+        {{ city }}
+        </span>
+        </span>
+        </h3>
+<!--        <div id="player_cards"> {{ players_cards[current_player] }} </div>-->
+        <textarea v-model="players_cards[current_player]" placeholder="add multiple lines"></textarea>
+        <textarea v-model="game_cards" placeholder="game cards"></textarea>
+        <textarea v-model="old_cards" placeholder="old cards"></textarea>
+        
+<!--        <tr>-->
+<!--        <td>-->
+<!--        <div contenteditable="true" id="player_cards">{{ players_cards[current_player] }}</div>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--        <div contenteditable="true" id="game_cards">{{ game_cards }}</div>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--        <div contenteditable="true" id="old_cards">{{ old_cards }}</div>-->
+<!--        </td>-->
+<!--        </tr>-->
+        
+<!--        <img class='card_img' src="images/trash/cities_cards.png"/>-->
+<!--        &nbsp &nbsp-->
+<!--        <img class='card_img' src="images/trash/cities_blue.png"/>-->
+<!--        &nbsp &nbsp-->
+<!--        <img class='card_img' src="images/trash/cities_yellow.png"/>-->
+<!--        &nbsp &nbsp-->
+<!--        <img class='card_img' src="images/trash/cities_red.png"/>-->
+<!--        &nbsp &nbsp-->
+<!--        <img class='card_img' src="images/trash/cities_black.png"/>-->
     </center>
     <br><br><br>
 </div>
-    
 </div>
     `,
-    mounted(){
-         plotMap();
+    mounted() {
+        plotMap();
     },
-    data: function (){
+    data: function () {
         return {
-            'current_player': 'Doctor'
+            current_player: 'Doctor',
+            players_cards: init_players_cards,
+            players_cards_color: init_players_cards_color,
+            game_cards: names_rus.join('\n'),
+            old_cards: [],
         }
-    }
+    },
+    watch: {
+        players_cards: function(players_cards){
+            this.players_cards_color =  convert2color(players_cards);
+        },
+        deep: true
+    },
 });
 
 Vue.component("tab-stats", {
     template: "<div><img src='img/pandemic_log_example.png' height='600px'></div></div>"
 });
 
-let game_vue =   new Vue({
+let game_vue = new Vue({
     el: "#dynamic-component-demo",
     data: {
-      currentTab: "Home",
-      tabs: ["Home", "Game", "Stats"],
+        currentTab: "Game",
+        tabs: ["Home", "Game", "Stats"],
+        virus_level: 1,
+        // current_player: 'Scientist',
+
     },
     computed: {
-      currentTabComponent: function() {
-        return "tab-" + this.currentTab.toLowerCase();
-      }
+        currentTabComponent: function () {
+            return "tab-" + this.currentTab.toLowerCase();
+        }
     },
-    methods:{
+    methods: {
         plotMap: plotMap
-    }
+    },
+
 });
 
