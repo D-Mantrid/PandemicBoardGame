@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pandemic lists</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+<!--    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>-->
+    <script src="https://unpkg.com/vue-draggable@1.1.1/lib/vue-draggable.js"></script>
+</head>
+
+<body>
+<div id="app"></div>
+<script>
+// if you are using library directly from CDN
+// just don't forget to access default prop
+// https://unpkg.com/vue-draggable@1.0.9/lib/vue-draggable.js
+Vue.use(VueDraggable.default);
+
+new Vue({
+  template: `
+  <div v-drag-and-drop:options="options" class="drag-wrapper">
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+    <ul>
+      <li>Item 4</li>
+      <li>Item 5</li>
+      <li>Item 6</li>
+    </ul>
+    <ul>
+      <li>Item 7</li>
+      <li>Item 8</li>
+      <li>Item 9</li>
+    </ul>
+  </div>
+  `,
+  data() {
+    const componentInstance = this;
+    return {
+      options: {
+        onDragend(event) {
+          componentInstance.someDummyMethod();
+          if (!event.droptarget) {
+            console.log('event is dropped out');
+          }
+        }
+      }
+    }
+  },
+  methods: {
+    someDummyMethod() {
+      console.log('Hello from someDummyMethod');
+    }
+  }
+}).$mount("#app");
+
+</script>
+<style>
+    .drag-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  padding: 3px !important;
+  min-height: 70vh;
+  width: 100px;
+  float:left;
+  list-style-type:none;
+  overflow-y:auto;
+  border:2px solid #888;
+  border-radius:0.2em;
+  background:#8adccc;
+  color:#555;
+  margin-right: 5px;
+}
+
+/* drop target state */
+ul[aria-dropeffect="move"] {
+  border-color:#68b;
+  background:#fff;
+}
+
+/* drop target focus and dragover state */
+ul[aria-dropeffect="move"]:focus,
+ul[aria-dropeffect="move"].dragover
+{
+  outline:none;
+  box-shadow:0 0 0 1px #fff, 0 0 0 3px #68b;
+}
+
+/* draggable items */
+li {
+  display:block;
+  list-style-type:none;
+  margin:0 0 2px 0;
+  padding:0.2em 0.4em;
+  border-radius:0.2em;
+  line-height:1.3;
+}
+
+li:hover {
+  box-shadow:0 0 0 2px #68b, inset 0 0 0 1px #ddd;
+}
+
+/* items focus state */
+li:focus
+{
+  outline:none;
+  box-shadow:0 0 0 2px #68b, inset 0 0 0 1px #ddd;
+}
+
+/* items grabbed state */
+li[aria-grabbed="true"]
+{
+  background:#5cc1a6;
+  color:#fff;
+}
+
+@keyframes nodeInserted {
+    from { opacity: 0.2; }
+    to { opacity: 0.8; }
+}
+
+.item-dropzone-area {
+    height: 2rem;
+    background: #888;
+    opacity: 0.8;
+    animation-duration: 0.5s;
+    animation-name: nodeInserted;
+}
+</style>
+</body>
+</html>

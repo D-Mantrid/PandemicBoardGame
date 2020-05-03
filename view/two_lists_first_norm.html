@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Two lists</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+</head>
+
+<body>
+<div id="app"></div>
+<script>
+// if you are using library directly from CDN
+// just don't forget to access default prop
+// https://unpkg.com/vue-draggable@1.0.9/lib/vue-draggable.js
+Vue.use(vuedraggable);
+
+new Vue({
+  template: `
+    <div class="row">
+    <div class="col-3">
+      <h3>Draggable 1</h3>
+      <draggable class="list-group" :list="list1" group="people" @change="log">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in list1"
+          :key="element.name"
+        >
+          {{ element.name }} {{ index }} {{ element.id }}
+        </div>
+      </draggable>
+    </div>
+
+    <div class="col-3">
+      <h3>Draggable 2</h3>
+      <draggable class="list-group" :list="list2" group="people" @change="log">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in list2"
+          :key="element.name"
+        >
+          {{ element.name }} {{ index }} {{ element.id }}
+        </div>
+      </draggable>
+    </div>
+
+    <div class="col-3">
+      <h3>Draggable 3</h3>
+      <draggable class="list-group" :list="list3" group="people" @change="log">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in list3"
+          :key="element.name"
+        >
+          {{ element.name }} {{ index }} {{ element.id }}
+        </div>
+      </draggable>
+    </div>
+
+    <rawDisplayer class="col-3" :value="list1" title="List 1" />
+    <rawDisplayer class="col-3" :value="list2" title="List 2" />
+
+    <div>{{ list1 }}</div>
+    <div>{{ list2 }}<br><br></div>
+    <div>{{ list3 }}</div>
+  </div>
+  `,
+  data() {
+    return {
+      list1: [
+        { name: "Alice", id: 1 },
+        { name: "Bob", id: 2 },
+        { name: "Charlie", id: 3 },
+      ],
+      list2: [
+        { name: "Chuck", id: 5 },
+        { name: "Dave", id: 6 },
+        { name: "Eva", id: 7 }
+      ],
+      list3: [
+        { name: "Tom", id: 8 },
+        { name: "Elisabet", id: 9 },
+        { name: "John", id: 10 }
+      ]
+    };
+  },
+  methods: {
+    add: function() {
+      this.list.push({ name: "Juan" });
+    },
+    replace: function() {
+      this.list = [{ name: "Edgard" }];
+    },
+    clone: function(el) {
+      return {
+        name: el.name + " cloned"
+      };
+    },
+    log: function(evt) {
+      window.console.log(evt);
+    }
+  }
+}).$mount("#app");
+
+</script>
+
+<style>
+
+.list-group {
+    padding: 20px;
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+}
+.list-group-item {
+    cursor: move;
+}
+.list-group-item {
+    cursor: move;
+}
+.col-3 {
+    -ms-flex: 0 0 25%;
+    -webkit-box-flex: 0;
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
+.row {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+*, ::after, ::before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+</style>
+
+</body>
+</html>

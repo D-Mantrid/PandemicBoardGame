@@ -84,8 +84,9 @@ ul {
 }
 
 #mapid {
-    width: 1000px;
+    width: 900px;
     height: 500px;
+    /*height: 500px;*/
     /*position: fixed;*/
     /*right: 5%;*/
     left: 205px;
@@ -217,18 +218,26 @@ textarea {
 }
 
 .color_red {
-    color: red;
+    color: white;
+    background: red;
 }
 
 .color_blue {
-    color: blue;
+    color: white;
+    background: blue;
 }
 
 .color_black {
-    color: black;
-    background: white;
+    color: white;
+    background: black;
 }
 
 .color_yellow {
-    color: yellow;
+    color: black;
+    background: yellow;
+}
+
+.pandemic_lists_link {
+    font-size: 20px;
+    color: white;
 }

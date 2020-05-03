@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Two lists</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+</head>
+
+<body>
+<div id="app"></div>
+<script>
+    Vue.use(vuedraggable);
+
+    // `<h1>{{ current_player }}</h1><br><br>
+    // <select v-model="current_player" size="4" class="left_select">
+    //     <option><span class="player_span">Doctor</span></option>
+    //     <option><span class="player_span">Researcher</span></option>
+    //     <option><span class="player_span">Scientist</span></option>
+    //     <option><span class="player_span">Caranteener</span></option>
+    // </select><br>`;
+
+    new Vue({
+        template: `
+    <div class="row">
+
+<!--    <span v-if="current_player == 'Scientist'">{{ cards_scientist }} </span>-->
+<!--    <span v-if="current_player == 'Doctor'">{{ cards_doctor }} </span>-->
+<!--    <span v-if="current_player == 'Researcher'">{{ cards_researcher }} </span>-->
+<!--    <span v-if="current_player == 'Caranteener'">{{ cards_caranteener }} </span>-->
+
+    <div class="col-3">
+      <h3>Doctor</h3>
+      <draggable class="list-group" :list="cards_doctor"  group="people" @change="log">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in cards_doctor"
+          :key="element.name"
+        >
+          {{ element.name }} {{ index }} {{ element.id }}
+        </div>
+      </draggable>
+    </div>
+
+
+     <div class="col-3">
+      <h3>Scientist</h3>
+      <draggable class="list-group" :list="cards_scientist"  group="people" @change="log">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in cards_scientist"
+          :key="element.name"
+        >
+          {{ element.name }} {{ index }} {{ element.id }}
+        </div>
+      </draggable>
+    </div>
+
+     <div class="col-3">
+      <h3>Researcher</h3>
+      <draggable class="list-group" :list="cards_researcher"  group="people" @change="log">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in cards_researcher"
+          :key="element.name"
+        >
+          {{ element.name }} {{ index }} {{ element.id }}
+        </div>
+      </draggable>
+    </div>
+
+     <div class="col-3">
+      <h3>Caranteener</h3>
+      <draggable class="list-group"  :list="cards_researcher"  group="people" @change="log">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in cards_researcher"
+          :key="element.name"
+        >
+          {{ element.name }} {{ index }} {{ element.id }}
+        </div>
+      </draggable>
+    </div>
+
+
+    <div class="col-3">
+      <h3>Game cards</h3>
+      <draggable class="list-group" group="people" @change="log">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in game_cards"
+          :key="element.name"
+        >
+          {{ element.name }} {{ index }} {{ element.id }}
+        </div>
+      </draggable>
+    </div>
+
+    <div class="col-3">
+      <h3>Old cards</h3>
+      <draggable class="list-group" group="people" @change="log">
+        <div
+          class="list-group-item"
+          v-for="(element, index) in old_cards"
+          :key="element.name"
+        >
+          {{ element.name }} {{ index }} {{ element.id }}
+        </div>
+      </draggable>
+    </div>
+
+  <div>Scientists {{ cards_scientist }} </div> <br>
+    <div>Doctor {{ cards_doctor }} </div> <br>
+    <div>Researcher {{ cards_researcher }} </div><br>
+    <div>Caranteener {{ cards_caranteener }} </div><br>
+
+
+
+  </div>
+  `,
+        data() {
+            return {
+                current_player: 'Doctor',
+
+                // list_dict: {
+                //     'Doctor': [{name: 'A', id: 100}, {name: 'AA', id: 101}],
+                //     'Scientist': [{name: 'B', id: 100}, {name: 'BB', id: 102}],
+                //     'Researcher': [{name: 'C', id: 100}, {name: 'CC', id: 103}],
+                //     'Caranteener': [{name: 'D', id: 100}, {name: 'DD', id: 104}]
+                // },
+                // list1: [
+                //   { name: "Alice", id: 1 },
+                //   { name: "Bob", id: 2 },
+                //   { name: "Charlie", id: 3 },
+                // ],
+
+                'cards_doctor': [{name: 'A', id: 100}, {name: 'AA', id: 101}],
+                'cards_scientist': [{name: 'B', id: 100}, {name: 'BB', id: 102}],
+                'cards_researcher': [{name: 'C', id: 100}, {name: 'CC', id: 103}],
+                'cards_caranteener': [{name: 'D', id: 100}, {name: 'DD', id: 104}],
+
+                game_cards: [
+                    {name: "Chuck", id: 5},
+                    {name: "Dave", id: 6},
+                    {name: "Eva", id: 7}
+                ],
+                old_cards: [
+                    {name: "Tom", id: 8},
+                    {name: "Elisabet", id: 9},
+                    {name: "John", id: 10}
+                ]
+            };
+        },
+        methods: {
+            add: function() {
+              this.list.push({ name: "Juan" });
+            },
+            replace: function() {
+              this.list = [{ name: "Edgard" }];
+            },
+            clone: function(el) {
+              return {
+                name: el.name + " cloned"
+              };
+            },
+            log: function (evt) {
+                window.console.log(evt);
+            }
+        }
+    }).$mount("#app");
+
+</script>
+
+<style>
+    .list-group {
+        padding: 20px;
+    }
+
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: .75rem 1.25rem;
+        margin-bottom: -1px;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, .125);
+    }
+
+    .list-group-item {
+        cursor: move;
+    }
+
+    .list-group-item {
+        cursor: move;
+    }
+
+    .col-3 {
+        -ms-flex: 0 0 25%;
+        -webkit-box-flex: 0;
+        flex: 0 0 25%;
+        max-width: 25%;
+        margin: 30px;
+    }
+
+    .row {
+        display: -ms-flexbox;
+        display: -webkit-box;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        /*margin-right: -15px;*/
+        /*margin-left: -15px;*/
+    }
+
+    /**, ::after, ::before {*/
+    /*    -webkit-box-sizing: border-box;*/
+    /*    box-sizing: border-box;*/
+    /*}*/
+
+
+    select {
+
+        display: block;
+        position: relative;
+        height: 200px;
+
+    }
+
+    }
+</style>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Two lists</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+</head>
+
+<body>
+<div id="app"></div>
+<script src="game_cities.js">
+</script>
+<script>
+    function shuffle(array) {
+          array.sort(() => Math.random() - 0.5);
+    }
+
+    function text2color(words) {
+        let new_words = [];
+        for (let i = 0; i < words.length; i++) {
+            let word = words[i];
+            let c = colors_rus[word];
+            new_words.push({name: word, cname: `color_${c}`})
+        }
+        return new_words;
+    }
+
+    let init_cards_doctor = text2color(['Атланта', 'Мадрид']);
+    let init_cards_scientist = text2color(['Пекин', 'Москва']);
+    let init_cards_researcher = text2color(['Лондон', 'Карачи']);
+    let init_cards_caranteener = text2color(['Лондон', 'Карачи']);
+
+    let init_players_words = ['Атланта', 'Мадрид', 'Пекин', 'Москва', 'Лондон', 'Карачи', 'Лондон', 'Карачи'];
+    let init_game_cards = text2color(names_rus.filter(function (x) {
+        return !init_players_words.includes(x);
+    }));
+    let init_old_cards = [];
+
+    Vue.use(vuedraggable);
+    new Vue({
+        template: `
+    <div class="row">
+    <div id="header_div">
+    &nbsp<h2>{{ current_player }}</h2>
+        <select v-model="current_player" size="4" class="left_select">
+            <option><span class="player_span">Doctor</span></option>
+            <option><span class="player_span">Researcher</span></option>
+            <option><span class="player_span">Scientist</span></option>
+            <option><span class="player_span">Caranteener</span></option>
+        </select><br>
+        <div hidden="true">
+            <span v-if="current_player == 'Scientist'">{{ cards_scientist }} </span>
+            <span v-if="current_player == 'Doctor'">{{ cards_doctor }} </span>
+            <span v-if="current_player == 'Researcher'">{{ cards_researcher }} </span>
+            <span v-if="current_player == 'Caranteener'">{{ cards_caranteener }} </span>
+        </div>
+    </div><br>
+
+    <div class="col-3" v-if="current_player == 'Doctor'" >
+      <h3>Doctor {{ cards_doctor.length }}</h3>
+      <draggable class="list-group" :list="cards_doctor"  group="people" @change="log">
+        <div
+          v-for="(element, index) in cards_doctor"
+          :key="element.name"
+          v-bind:class="['list-group-item', element.cname]"
+        >
+          {{ element.name }}
+        </div>
+      </draggable>
+    </div>
+
+     <div class="col-3" v-if="current_player == 'Scientist'">
+      <h3>Scientist {{ cards_scientist.length }} </h3>
+      <draggable class="list-group" :list="cards_scientist"  group="people" @change="log">
+        <div
+          v-bind:class="['list-group-item', element.cname]"
+          v-for="(element, index) in cards_scientist"
+          :key="element.name"
+        >
+          {{ element.name }}
+        </div>
+      </draggable>
+    </div>
+
+     <div class="col-3" v-if="current_player == 'Researcher'">
+      <h3>Researcher {{ cards_researcher.length }}</h3>
+      <draggable class="list-group" :list="cards_researcher"  group="people" @change="log">
+        <div
+           v-bind:class="['list-group-item', element.cname]"
+          v-for="(element, index) in cards_researcher"
+          :key="element.name"
+        >
+          {{ element.name }}
+        </div>
+      </draggable>
+    </div>
+
+     <div class="col-3" v-if="current_player == 'Caranteener'">
+      <h3>Caranteener {{ cards_caranteener.length }}</h3>
+      <draggable class="list-group"  :list="cards_caranteener"  group="people" @change="log">
+        <div
+           v-bind:class="['list-group-item', element.cname]"
+          v-for="(element, index) in cards_caranteener"
+          :key="element.name"
+        >
+          {{ element.name }}
+        </div>
+      </draggable>
+    </div>
+
+
+    <div class="col-3">
+      <h3>Game cards {{ game_cards.length }}<button class="shuffle_btn" v-on:click="shuffle_game_cards">shuffle</button></h3>
+      <draggable class="list-group" :list="game_cards" group="people" @change="log">
+        <div
+          v-bind:class="['list-group-item', element.cname]"
+          v-for="(element, index) in game_cards"
+          :key="element.name"
+        >
+          {{ element.name }}
+        </div>
+      </draggable>
+    </div>
+
+    <div class="col-3">
+      <h3>Old cards {{ old_cards.length }}<button class="shuffle_btn" v-on:click="shuffle_old_cards">shuffle</button> </h3>
+      <draggable class="list-group" :list="old_cards"  group="people" @change="log">
+        <div
+          v-bind:class="['list-group-item', element.cname]"
+          v-for="(element, index) in old_cards"
+          :key="element.name"
+        >
+          {{ element.name }}
+        </div>
+      </draggable>
+    </div>
+
+<div>
+    <div>Scientists {{ cards_scientist }} </div> <br>
+    <div>Doctor {{ cards_doctor }} </div> <br>
+    <div>Researcher {{ cards_researcher }} </div><br>
+    <div>Caranteener {{ cards_caranteener }} </div><br>
+    <div>Games cards {{ game_cards }} </div><br>
+    <div>Old cards {{ old_cards }} </div><br>
+</div>
+
+
+  </div>
+  `,
+        data() {
+            return {
+                current_player: 'Doctor',
+
+
+                cards_doctor: init_cards_doctor,
+                cards_scientist: init_cards_scientist,
+                cards_researcher: init_cards_researcher,
+                cards_caranteener: init_cards_caranteener,
+
+                game_cards: init_game_cards,
+                old_cards: init_old_cards
+            };
+        },
+        methods: {
+            add: function () {
+                this.list.push({name: "Juan"});
+            },
+            replace: function () {
+                this.list = [{name: "Edgard"}];
+            },
+            clone: function (el) {
+                return {
+                    name: el.name + " cloned"
+                };
+            },
+            log: function (evt) {
+                window.console.log(evt);
+            },
+            shuffle_game_cards: function(){
+                shuffle(this.game_cards);
+            },
+            shuffle_old_cards: function(){
+                shuffle(this.old_cards);
+            }
+        }
+    }).$mount("#app");
+</script>
+
+<style>
+    .list-group {
+        padding: 20px;
+    }
+
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: .75rem 1.25rem;
+        margin-bottom: -1px;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, .125);
+    }
+
+    .list-group-item {
+        cursor: move;
+    }
+
+    .list-group-item {
+        cursor: move;
+    }
+
+    .col-3 {
+        -ms-flex: 0 0 25%;
+        -webkit-box-flex: 0;
+        flex: 0 0 25%;
+        max-width: 25%;
+        margin: 10px;
+    }
+
+    .row {
+        display: -ms-flexbox;
+        display: -webkit-box;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        /*margin-right: -15px;*/
+        /*margin-left: -15px;*/
+    }
+
+    select {
+        display: block;
+        position: relative;
+        font-size: 20px;
+        height: 100px;
+        width: 150px;
+    }
+
+    #header_div {
+        position: relative;
+        display: block;
+        color: white;
+        background: #343436;
+        width: 150px;
+    }
+
+
+    .color_red {
+        color: white;
+        background: red;
+    }
+
+    .color_blue {
+        color: white;
+        background: blue;
+    }
+
+    .color_black {
+        color: white;
+        background: black;
+    }
+
+    .color_yellow {
+        color: black;
+        background: yellow;
+    }
+
+    .shuffle_btn {
+        border-radius: 10px;
+        height: 20px;
+        width: 70px;
+        background: linear-gradient(180deg, #1aad00, #009b28);
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    body{
+        background: #fcf8f9;
+    }
+
+</style>
+
+</body>
+</html>
