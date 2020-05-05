@@ -1,12 +1,12 @@
 # Pyndemic
 _v0.1.0_
 
-===
+---
 
 **WARNING: the project migrated to another repo and this repo is now inactive.**
 **Please visit [this page](https://github.com/Discarded-Team/Pyndemic) to find the actual project location.**
 
-===
+---
 
 ## Description
 This is a future digital implementation of the original [Pandemic board game][official].
